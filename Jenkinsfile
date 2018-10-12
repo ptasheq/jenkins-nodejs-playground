@@ -22,8 +22,10 @@ pipeline {
 			stages {
 				stage('Deploy production') {
 					when {
-						expression { JOB_NAME == 'test-pipeline' }
-						environment name: 'DEPLOY_TO', value: 'production'
+						expression { env.JOB_NAME == 'test-pipeline' }
+					}
+					environment {
+						DEPLOY_TO = 'production'
 					}
 					steps {
 						sh 'echo $DEPLOY_TO'
@@ -31,8 +33,10 @@ pipeline {
 				}
 				stage('Deploy development') {
 					when {
-						expression { JOB_NAME != 'test-pipeline' }
-						environment name: 'DEPLOY_TO', value: 'development'
+						expression { env.JOB_NAME != 'test-pipeline' }
+					}
+					environment {
+						DEPLOY_TO = 'development'
 					}
 					steps {
 						sh 'echo $DEPLOY_TO'
