@@ -1,12 +1,14 @@
 pipeline {
 	agent any
 
+	tools {
+		nodejs 'node_9'
+	}
+
 	stages {
 		stage('Install') {
 			steps {
-				nodejs(nodeJSInstallationName: 'node_9') {
-					sh 'npm install'
-				}
+				sh 'npm install'
 			}
 		}
 	}
