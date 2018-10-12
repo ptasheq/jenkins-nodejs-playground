@@ -4,7 +4,7 @@ pipeline {
 	stages {
 		stage('Install') {
 			steps {
-				nodejs(nodeJSInstallationName: 'Node 9.x') {
+				nodejs(nodeJSInstallationName: 'node_9') {
 					sh 'npm install'
 				}
 			}
