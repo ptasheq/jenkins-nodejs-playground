@@ -19,20 +19,26 @@ pipeline {
 		}
 
 		stage('Deploy') {
-			when {
-                expression { JOB_NAME == 'test-pipeline' }
-                environment name: 'DEPLOY_TO', value: 'production'
-            }
-            steps {
-                sh 'echo $DEPLOY_TO'
-            }
-            when {
-                expression { JOB_NAME != 'test-pipeline' }
-                environment name: 'DEPLOY_TO', value: 'development'
-            }
-            steps {
-                sh 'echo $DEPLOY_TO'
-            }
+			stages {
+				stage('Deploy production') {
+					when {
+						expression { JOB_NAME == 'test-pipeline' }
+						environment name: 'DEPLOY_TO', value: 'production'
+					}
+					steps {
+						sh 'echo $DEPLOY_TO'
+					}
+				}
+				stage('Deploy development') {
+					when {
+						expression { JOB_NAME != 'test-pipeline' }
+						environment name: 'DEPLOY_TO', value: 'development'
+					}
+					steps {
+						sh 'echo $DEPLOY_TO'
+					}
+				}
+			}
 		}
 	}
 }
