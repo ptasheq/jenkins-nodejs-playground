@@ -9,6 +9,7 @@ pipeline {
 		stage('Prepare') {
 			steps {
 				sh "echo $JOB_NAME"
+
 				script {
 					if (JOB_NAME == 'test-pipeline') {
 						def server = '192.168.2.1'
@@ -33,8 +34,8 @@ pipeline {
 
 		stage('Deploy') {
 			steps {
-				sh "echo ${server}"
 				withEnv(['SECRET_SSH_KEY=' + server]) {
+					sh 'echo $SECRET_SSH_KEY'
 					sh 'node scripts/deploy.js'
                 }
 			}
