@@ -11,5 +11,11 @@ pipeline {
 				sh 'npm install'
 			}
 		}
+
+		stage('Print hash') {
+			steps {
+				sh 'echo $(git rev-parse HEAD)'
+			}
+		}
 	}
 }
