@@ -7,9 +7,11 @@ pipeline {
 
 	stages {
 		stage('Prepare') {
-			script {
-				if (env.JOB_NAME == 'test-pipeline') {
-					def server = '192.168.2.1'
+			steps {
+				script {
+					if (env.JOB_NAME == 'test-pipeline') {
+						def server = '192.168.2.1'
+					}
 				}
 			}
 		}
