@@ -12,9 +12,9 @@ pipeline {
 			}
 		}
 
-		stage('Print hash') {
+		stage('Build') {
 			steps {
-				sh 'echo $(git rev-parse HEAD)'
+				sh 'node scripts/build.js'
 			}
 		}
 	}
