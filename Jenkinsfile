@@ -6,6 +6,13 @@ pipeline {
 	}
 
 	stages {
+		stage('Prepare') {
+			script {
+				if (env.JOB_NAME == 'test-pipeline') {
+					def server = '192.168.2.1'
+				}
+			}
+		}
 		stage('Install') {
 			steps {
 				sh 'npm install'
@@ -15,6 +22,15 @@ pipeline {
 		stage('Build') {
 			steps {
 				sh 'node scripts/build.js'
+			}
+		}
+
+		stage('Deploy') {
+			steps {
+				sh "echo ${server}"
+				withEnv(['SECRET_SSH_KEY=' + server]) {
+					sh 'node scripts/deploy.js'
+                }
 			}
 		}
 	}
