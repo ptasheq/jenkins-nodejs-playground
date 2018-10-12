@@ -8,9 +8,13 @@ pipeline {
 	stages {
 		stage('Prepare') {
 			steps {
+				sh "echo $JOB_NAME"
 				script {
-					if (env.JOB_NAME == 'test-pipeline') {
+					if (JOB_NAME == 'test-pipeline') {
 						def server = '192.168.2.1'
+					}
+					else {
+						def server = '1.2.168.192'
 					}
 				}
 			}
