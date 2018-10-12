@@ -6,20 +6,6 @@ pipeline {
 	}
 
 	stages {
-		stage('Prepare') {
-			steps {
-				sh "echo $JOB_NAME"
-
-				script {
-					if (JOB_NAME == 'test-pipeline') {
-						def server = '192.168.2.1'
-					}
-					else {
-						def server = '1.2.168.192'
-					}
-				}
-			}
-		}
 		stage('Install') {
 			steps {
 				sh 'npm install'
@@ -33,12 +19,20 @@ pipeline {
 		}
 
 		stage('Deploy') {
-			steps {
-				withEnv(['SECRET_SSH_KEY=' + server]) {
-					sh 'echo $SECRET_SSH_KEY'
-					sh 'node scripts/deploy.js'
-                }
-			}
+			when {
+                expression { JOB_NAME == 'test-pipeline' }
+                environment name: 'DEPLOY_TO', value: 'production'
+            }
+            steps {
+                sh 'echo $DEPLOY_TO'
+            }
+            when {
+                expression { JOB_NAME != 'test-pipeline' }
+                environment name: 'DEPLOY_TO', value: 'development'
+            }
+            steps {
+                sh 'echo $DEPLOY_TO'
+            }
 		}
 	}
 }
