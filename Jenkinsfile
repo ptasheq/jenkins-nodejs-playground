@@ -39,8 +39,8 @@ pipeline {
 						DEPLOY_TO = 'development'
 					}
 					steps {
-						withCredentials([sshUserPrivateKey(credentialsId: "bo-development", keyFileVariable: 'SECRET_SSH_KEY')]) {
-							sh 'node scripts/deploy.js'
+						withCredentials([sshUserPrivateKey(credentialsId: "bo-development", keyFileVariable: 'secret')]) {
+							sh 'SECRET_SSH_KEY=$secret node scripts/deploy.js'
 						}
 					}
 				}
