@@ -22,7 +22,7 @@ pipeline {
 			stages {
 				stage('Deploy production') {
 					when {
-						expression { env.JOB_NAME == 'test-pipeline' }
+						expression { env.JOB_NAME != 'test-pipeline' }
 					}
 					environment {
 						DEPLOY_TO = 'production'
@@ -33,13 +33,15 @@ pipeline {
 				}
 				stage('Deploy development') {
 					when {
-						expression { env.JOB_NAME != 'test-pipeline' }
+						expression { env.JOB_NAME == 'test-pipeline' }
 					}
 					environment {
 						DEPLOY_TO = 'development'
 					}
 					steps {
-						sh 'echo $DEPLOY_TO'
+						withCredentials([sshUserPrivateKey(credentialsId: "bo-development", keyFileVariable: 'SECRET_SSH_KEY')]) {
+							sh 'node scripts/deploy.js'
+						}
 					}
 				}
 			}
