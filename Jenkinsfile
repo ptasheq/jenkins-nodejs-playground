@@ -36,7 +36,8 @@ pipeline {
 						expression { env.JOB_NAME == 'test-pipeline' }
 					}
 					environment {
-						DEPLOY_TO = 'development'
+						DEPLOY_TO = '172.19.0.1'
+						PORT=30000
 					}
 					steps {
 						withCredentials([sshUserPrivateKey(credentialsId: "bo-development", keyFileVariable: 'secret')]) {

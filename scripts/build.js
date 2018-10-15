@@ -1,4 +1,7 @@
-const runWhenNewHash = require('./helpers/run_when_new_hash.js');
+const {runWhenNewHash} = require('./helpers/runner.js');
 
+runWhenNewHash('exec', 'npm run populate');
 runWhenNewHash('exec', 'npm run build');
+runWhenNewHash('exec', 'mv server/package.json.deploy server/package.json');
+runWhenNewHash('exec', 'cd server/ && npm i');
 
