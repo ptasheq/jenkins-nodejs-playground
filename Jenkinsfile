@@ -36,7 +36,7 @@ pipeline {
 						expression { env.JOB_NAME == 'test-pipeline' }
 					}
 					environment {
-						DEPLOY_TO = '172.19.0.1'
+						DEPLOY_TO = '172.18.0.1'
 						PORT = 30000
 						USERNAME = 'vagrant'
 					}
